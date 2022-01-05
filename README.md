@@ -5,8 +5,10 @@ with a Postgres Database and Caddy HTTPS Proxy on AWS.
 Each of the three services runs on its own EC2 instance.
 
 The provisioning is done by passing a shell script via
-cloud-init to the instances during boot, which installs
-Docker Engine and runs the container.
+[cloud-init](https://cloudinit.readthedocs.io/en/latest/)
+to the instances during boot, which installs
+Docker Engine and runs the container. The service of nip.io
+is used to generate a domain name.
 
 ## Requirements
 
@@ -21,10 +23,17 @@ First, initialize terraform:
 
     terraform init
 
-Plan the configuration(check):
+Plan the configuration (check):
 
     terraform plan
 
 And apply:
 
     terraform apply
+
+When Terraform is done applying, you'll see the URL of Gitea.
+Wait for it to finish installing and then visit the page.
+
+## Troubleshooting
+
+Ensure your default VPC has the internal IP range of `172.31.0.0/16` assigned.
