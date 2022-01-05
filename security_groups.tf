@@ -1,4 +1,4 @@
-resource "awx_security_group" "egress-all-all" {
+resource "aws_security_group" "egress-all-all" {
   name = "egress-all-all"
 
   // Terraform removes the default rule
