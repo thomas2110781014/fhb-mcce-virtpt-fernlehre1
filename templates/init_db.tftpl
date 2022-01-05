@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# update system
+sudo yum update -y
+
+# install docker engine and add user to docker group
+sudo amazon-linux-extras install docker -y
+sudo service docker start
+sudo usermod -aG docker ec2-user
+newgrp docker
+
+# run our app
+docker run -d \
+  --restart always \
+  -p "5432:5432" \
+  -v "postgres-data:/var/lib/postgresql/data" \
+  -e "POSTGRES_DB=${db_name}" \
+  -e "POSTGRES_USER=${db_user}" \
+  -e "POSTGRES_PASSWORD=${db_pass}" \
+  postgres

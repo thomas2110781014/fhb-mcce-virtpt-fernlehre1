@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# update system
+sudo yum update -y
+
+# install docker engine and add user to docker group
+sudo amazon-linux-extras install docker -y
+sudo service docker start
+sudo usermod -aG docker ec2-user
+newgrp docker
+
+# run our app
+docker run -d \
+  --restart always \
+  -p "2222:22" \
+  -p "3000:3000" \
+  -v "gitea-data:/data" \
+  -v "/etc/timezone:/etc/timezone:ro" \
+  -v "/etc/localtime:/etc/localtime:ro" \
+  -e "USER_UID=1000" \
+  -e "USER_GID=1000" \
+  -e "GITEA__database__DB_TYPE=postgres" \
+  -e "GITEA__database__HOST=${db_host}:5432" \
+  -e "GITEA__database__NAME=${db_name}" \
+  -e "GITEA__database__USER=${db_user}" \
+  -e "GITEA__database__PASSWD=${db_pass}" \
+  gitea/gitea
