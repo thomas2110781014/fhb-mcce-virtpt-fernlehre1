@@ -5,7 +5,8 @@ with a Postgres Database and Caddy HTTPS Proxy on AWS.
 Each of the three services runs on its own EC2 instance.
 
 The provisioning is done by passing a shell script via
-cloud-init to the instances during boot.
+cloud-init to the instances during boot, which installs
+Docker Engine and runs the container.
 
 ## Requirements
 
