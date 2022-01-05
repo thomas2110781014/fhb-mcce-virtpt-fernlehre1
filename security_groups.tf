@@ -1,3 +1,14 @@
+resource "awx_security_group" "egress-all-all" {
+  name = "egress-all-all"
+
+  // Terraform removes the default rule
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
 
 resource "aws_security_group" "ingress-all-ssh" {
   name = "ingress-all-ssh"
@@ -8,13 +19,6 @@ resource "aws_security_group" "ingress-all-ssh" {
     from_port = 22
     to_port = 22
     protocol = "tcp"
-  }
-  // Terraform removes the default rule
-  egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
@@ -28,13 +32,6 @@ resource "aws_security_group" "ingress-all-2222" {
     to_port = 2222
     protocol = "tcp"
   }
-  // Terraform removes the default rule
-  egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
 }
 
 resource "aws_security_group" "ingress-all-http" {
@@ -47,13 +44,6 @@ resource "aws_security_group" "ingress-all-http" {
     to_port = 80
     protocol = "tcp"
   }
-  // Terraform removes the default rule
-  egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
 }
 
 resource "aws_security_group" "ingress-all-https" {
@@ -65,13 +55,6 @@ resource "aws_security_group" "ingress-all-https" {
     from_port = 443
     to_port = 443
     protocol = "tcp"
-  }
-  // Terraform removes the default rule
-  egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
@@ -86,13 +69,6 @@ resource "aws_security_group" "ingress-private-db" {
     to_port = 5432
     protocol = "tcp"
   }
-  // Terraform removes the default rule
-  egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
 }
 
 resource "aws_security_group" "ingress-private-gitea" {
@@ -105,12 +81,5 @@ resource "aws_security_group" "ingress-private-gitea" {
     from_port = 3000
     to_port = 3000
     protocol = "tcp"
-  }
-  // Terraform removes the default rule
-  egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
   }
 }

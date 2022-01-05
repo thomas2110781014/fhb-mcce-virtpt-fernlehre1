@@ -13,8 +13,9 @@ resource "aws_instance" "gitea" {
   instance_type = "t3.micro"
 
   vpc_security_group_ids = [
+    aws_security_group.egress-all-all.id,
     aws_security_group.ingress-all-2222.id,
-    aws_security_group.ingress-private-gitea.id
+    aws_security_group.ingress-private-gitea.id,
   ]
 
   user_data = templatefile("${path.module}/templates/init_gitea.tftpl", { db_host = aws_instance.db.private_ip, db_name = var.db_name, db_user = var.db_user, db_pass = var.db_pass })
@@ -29,6 +30,7 @@ resource "aws_instance" "db" {
   instance_type = "t3.micro"
 
   vpc_security_group_ids = [
+    aws_security_group.egress-all-all.id,
     aws_security_group.ingress-private-db.id,
   ]
 
@@ -44,6 +46,7 @@ resource "aws_instance" "proxy" {
   instance_type = "t3.micro"
 
   vpc_security_group_ids = [
+    aws_security_group.egress-all-all.id,
     aws_security_group.ingress-all-http.id,
     aws_security_group.ingress-all-https.id,
   ]
