@@ -18,6 +18,10 @@ resource "aws_instance" "gitea" {
   ]
 
   user_data = templatefile("${path.module}/templates/init_gitea.tftpl", { db_host = aws_instance.db.private_ip, db_name = var.db_name, db_user = var.db_user, db_pass = var.db_pass })
+
+  tags = {
+    Name = "gitea"
+  }
 }
 
 resource "aws_instance" "db" {
@@ -29,6 +33,10 @@ resource "aws_instance" "db" {
   ]
 
   user_data = templatefile("${path.module}/templates/init_db.tftpl", { db_name = var.db_name, db_user = var.db_user, db_pass = var.db_pass })
+
+  tags = {
+    Name = "db"
+  }
 }
 
 resource "aws_instance" "proxy" {
@@ -41,4 +49,8 @@ resource "aws_instance" "proxy" {
   ]
 
   user_data = templatefile("${path.module}/templates/init_proxy.tftpl", { gitea_host = aws_instance.gitea.private_ip })
+
+  tags = {
+    Name = "proxy"
+  }
 }
