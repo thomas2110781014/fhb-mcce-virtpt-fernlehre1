@@ -17,7 +17,7 @@ is used to generate a domain name.
 
 ## Usage
 
-Provide a database password in `terraform.tfvars`.
+Provide a database password in `terraform.tfvars`. For this demo purpose, this is already done.
 
 First, initialize terraform:
 
